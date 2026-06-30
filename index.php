@@ -185,7 +185,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                     </div>
                     
                     <!-- Local Video Player -->
-                    <video x-show="!youtubeUrl" x-ref="mainVid" id="mainVideo" class="w-full h-full object-cover absolute inset-0" autoplay playsinline src="<?php echo !empty($videos) ? htmlspecialchars($videos[0]) : ''; ?>" :src="videos[activeVideoIndex]" @ended="nextVideo()" x-init="setTimeout(() => { $el.play().catch(e => console.log('Autoplay error:', e)) }, 500); $el.volume = videoVolume / 100;">
+                    <video x-show="!youtubeUrl" x-ref="mainVid" id="mainVideo" class="w-full h-full object-cover absolute inset-0" autoplay playsinline muted src="<?php echo !empty($videos) ? htmlspecialchars($videos[0]) : ''; ?>" :src="videos[activeVideoIndex]" @ended="nextVideo()" x-init="setTimeout(() => { $el.play().catch(e => console.log('Autoplay error:', e)) }, 500); $el.volume = videoVolume / 100; $el.muted = videoMuted;">
                         Your browser does not support the video tag.
                     </video>
 
@@ -543,7 +543,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                 videos: initialVideos,
                 activeVideoIndex: 0,
                 videoVolume: 100,
-                videoMuted: false,
+                videoMuted: true,
                 youtubeUrl: initialYoutubeUrl,
                 marqueeHtml: '<span class="mx-4 text-accent">◆</span> Memuat berita...',
                 newsItems: [],
