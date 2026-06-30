@@ -1,0 +1,95 @@
+{
+    "settings": {
+        "custom_running_text": "Selamat datang di UIN Siber Syekh Nurjati Cirebon. ",
+        "promos": [
+            "uploads\/6a427b7182481_SELAMATDATANG.jpg",
+            "uploads\/6a427b89897ae_sma1.jpg",
+            "uploads\/6a427baf9423f_Ucapankemanagri.jpg",
+            "uploads\/6a4284856cc62_SalinandariSelamatdanAPRESIASI1080x1350px.jpg",
+            "uploads\/6a429467455f8_artikel.png"
+        ],
+        "logo_url": "uploads\/6a427f635067c_logouinsscpng.png",
+        "videos": [
+            "uploads\/6a4247636d6d4_8Juni2026RamahDifabel.mp4",
+            "uploads\/6a4281bf0f721_Day1UMPTKIN2026MelangkahdenganbismillahdiKampusSiberPertamadiIndonesiaUINSiber.mp4",
+            "uploads\/6a428e0924840_Day29Juni2026.mp4"
+        ],
+        "youtube_url": ""
+    },
+    "kegiatans": [
+        {
+            "id": 1,
+            "tanggal": "28 Juni 2026",
+            "waktu": "08:00 - 15:00",
+            "nama": "Workshop Transformasi Digital Kurikulum",
+            "lokasi": "Aula Utama UIN Siber"
+        },
+        {
+            "id": 2,
+            "tanggal": "29 Juni 2026",
+            "waktu": "09:30 - 12:00",
+            "nama": "Seminar Nasional: Cyber Security",
+            "lokasi": "Cyber Theater"
+        },
+        {
+            "id": 4,
+            "tanggal": "30 Juni - 03 Juni 2026",
+            "waktu": "08.00-Selesai",
+            "nama": "Konsolidasi nasional kerja-kerja  pusat studi gender dan anak (psga) PTKI",
+            "lokasi": "Auditoriun Gedung Siber Lantai 8",
+            "tipe": "mendatang"
+        }
+    ],
+    "agenda_pimpinan": [
+        {
+            "id": 2,
+            "jabatan": "Warek II",
+            "kegiatan": "Rapat Pengumuman kelulusan Jalu UMPTKIN 2026",
+            "lokasi": "Ruang Senat  Gedung Rektorat Lt. 2"
+        },
+        {
+            "id": 3,
+            "jabatan": "Rektor",
+            "kegiatan": "Rapat Finalisasi Kegiatan Konsolidasi nasional kerja-kerja pusat studi gender dan anak (psga) PTKI",
+            "lokasi": "Ruang Senat Gedung Rektorat Lt. 2",
+            "tipe": "mendatang"
+        }
+    ],
+    "layanan_publik": [
+        {
+            "title": "Permohonan Informasi",
+            "link": "#"
+        },
+        {
+            "title": "Pengaduan",
+            "link": "#"
+        },
+        {
+            "title": "E-PPID",
+            "link": "#"
+        },
+        {
+            "title": "SOP Pelayanan",
+            "link": "#"
+        }
+    ],
+    "link_cepat": [
+        {
+            "title": "PPID Online",
+            "url": "https:\/\/ppid.uinssc.ac.id"
+        },
+        {
+            "title": "Website UIN",
+            "url": "https:\/\/uinssc.ac.id"
+        },
+        {
+            "title": "Jurnal UIN",
+            "url": "https:\/\/jurnal.uinssc.ac.id"
+        },
+        {
+            "title": "PMB Online",
+            "url": "https:\/\/pmb.uinssc.ac.id\/"
+        }
+    ],
+    "arsip_kegiatans": []
+}
