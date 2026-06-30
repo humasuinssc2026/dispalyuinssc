@@ -1,8 +1,8 @@
 <?php
 // admin.php
-@ini_set('upload_max_filesize', '1000');
-@ini_set('post_max_size', '1000');
-@ini_set('memory_limit', '1000');
+@ini_set('upload_max_filesize', '500M');
+@ini_set('post_max_size', '500M');
+@ini_set('memory_limit', '1000M');
 @ini_set('max_execution_time', '3000');
 session_start();
 
