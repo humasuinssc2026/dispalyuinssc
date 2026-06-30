@@ -65,6 +65,9 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
     <!-- Alpine JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
+        html {
+            font-size: 0.833333vw; /* Scales UI proportionally for 1080p and 4K (1rem = 16px at 1920w) */
+        }
         body {
             margin: 0;
             padding: 0;
@@ -169,10 +172,10 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
     <main class="flex-1 flex gap-4 p-4 min-h-0 overflow-hidden">
         
         <!-- Left Column (Grid spans) -->
-        <div class="w-[65%] flex flex-col gap-4 h-full">
+        <div class="w-[65%] grid grid-rows-[55fr_25fr_20fr] gap-4 h-full min-h-0">
             
             <!-- Top Row: Video & Promosi -->
-            <div class="flex gap-4 h-[55%]">
+            <div class="flex gap-4 min-h-0">
                 <!-- Video Player / YouTube Live -->
                 <div class="panel flex-1 relative overflow-hidden rounded-xl border border-accent/40 shadow-lg bg-black">
                     <!-- YouTube Player -->
@@ -200,7 +203,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                 </div>
 
                 <!-- Popup Promosi / Flayer -->
-                <div class="w-[280px] aspect-[1080/1350] shrink-0 relative my-auto hover:scale-105 transition-transform duration-500 overflow-hidden rounded-2xl border-4 border-accent shadow-[0_20px_50px_rgba(0,0,0,0.7)] bg-white p-1">
+                <div class="w-[17.5rem] aspect-[1080/1350] shrink-0 relative my-auto hover:scale-105 transition-transform duration-500 overflow-hidden rounded-2xl border-4 border-accent shadow-[0_20px_50px_rgba(0,0,0,0.7)] bg-white p-1">
                     <template x-for="(promo, index) in promos" :key="index">
                         <img :src="promo" 
                              x-show="activePromoIndex === index"
@@ -217,7 +220,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Middle Row (Deskripsi Kegiatan & Layanan Publik) -->
-            <div class="flex gap-4 h-[25%]">
+            <div class="flex gap-4 min-h-0">
                 <!-- Deskripsi Kegiatan -->
                 <div class="panel p-4 flex-1 flex flex-col">
                     <div class="panel-header">
@@ -271,7 +274,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Bottom Row (Berita Pimpinan) -->
-            <div class="panel p-4 h-[20%] flex flex-col">
+            <div class="panel p-4 flex flex-col min-h-0 relative">
                 <div class="panel-header justify-between">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path></svg>
@@ -289,7 +292,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                         <!-- Set 1 -->
                         <div class="flex gap-4 pr-4 shrink-0 h-full items-center">
                             <template x-for="(news, index) in newsItems" :key="'orig-'+index">
-                                <div class="bg-black/30 rounded-lg p-2 flex gap-3 border border-accent/10 h-[90%] w-[350px] shrink-0 overflow-hidden hover:border-accent/30 transition cursor-pointer">
+                                <div class="bg-black/30 rounded-lg p-2 flex gap-3 border border-accent/10 h-[90%] w-[22rem] shrink-0 overflow-hidden hover:border-accent/30 transition cursor-pointer">
                                     <img :src="news.image" class="w-1/3 object-cover rounded shadow-sm bg-black" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Logo-UINSSC-696x858.png'">
                                     <div class="flex-1 flex flex-col py-1">
                                         <div class="text-[9px] text-gray-400 mb-0.5" x-text="news.date"></div>
@@ -304,7 +307,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                         <!-- Set 2 for seamless loop -->
                         <div class="flex gap-4 pr-4 shrink-0 h-full items-center">
                             <template x-for="(news, index) in newsItems" :key="'dup-'+index">
-                                <div class="bg-black/30 rounded-lg p-2 flex gap-3 border border-accent/10 h-[90%] w-[350px] shrink-0 overflow-hidden hover:border-accent/30 transition cursor-pointer">
+                                <div class="bg-black/30 rounded-lg p-2 flex gap-3 border border-accent/10 h-[90%] w-[22rem] shrink-0 overflow-hidden hover:border-accent/30 transition cursor-pointer">
                                     <img :src="news.image" class="w-1/3 object-cover rounded shadow-sm bg-black" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Logo-UINSSC-696x858.png'">
                                     <div class="flex-1 flex flex-col py-1">
                                         <div class="text-[9px] text-gray-400 mb-0.5" x-text="news.date"></div>
@@ -322,10 +325,10 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
         </div>
 
         <!-- Right Column (Grid spans) -->
-        <div class="w-[35%] flex flex-col gap-4 h-full">
+        <div class="w-[35%] grid grid-rows-[55fr_25fr_20fr] gap-4 h-full min-h-0">
             
             <!-- Kalender & Agenda Top Section -->
-            <div class="panel p-4 h-[55%] flex flex-col overflow-hidden">
+            <div class="panel p-4 flex flex-col overflow-hidden min-h-0">
                 <div class="flex gap-4 h-full">
                     
                     <!-- Left: Kalender -->
@@ -377,7 +380,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                                 <template x-for="kegiatan in kegiatans.filter(k => k.tipe !== 'mendatang')" :key="'hariini-'+kegiatan.id">
                                     <div class="relative pl-4">
                                         <div class="absolute left-0 top-1 w-2 h-2 rounded-full border-2 border-accent bg-transparent"></div>
-                                        <div class="absolute left-[3px] top-3 bottom-[-12px] w-px border-l border-dashed border-accent/50 last-of-type:hidden"></div>
+                                        <div class="absolute left-[3px] top-3 bottom-[-0.75rem] w-px border-l border-dashed border-accent/50 last-of-type:hidden"></div>
                                         <div class="text-[10px] font-bold text-gray-300" x-text="kegiatan.waktu"></div>
                                         <div class="text-xs font-bold text-white leading-tight" x-text="kegiatan.nama"></div>
                                         <div class="text-[9px] text-gray-400" x-text="kegiatan.lokasi"></div>
@@ -422,7 +425,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Agenda Pimpinan -->
-            <div class="panel p-4 h-[25%] flex flex-col">
+            <div class="panel p-4 flex flex-col min-h-0">
                 <div class="panel-header">
                     <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                     <h2 class="text-sm font-bold tracking-wide uppercase">Agenda Pimpinan</h2>
@@ -469,7 +472,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Link Cepat & QR -->
-            <div class="panel p-4 h-[20%] flex flex-col">
+            <div class="panel p-4 flex flex-col min-h-0">
                 <div class="panel-header mb-2">
                     <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path></svg>
                     <h2 class="text-sm font-bold tracking-wide uppercase">Link Cepat & Informasi</h2>
@@ -494,7 +497,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
         <div class="bg-accent h-full px-6 flex items-center justify-center font-bold text-primary uppercase text-sm whitespace-nowrap z-20 relative">
             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             INFO TERKINI
-            <div class="w-0 h-0 border-t-[20px] border-t-transparent border-b-[20px] border-b-transparent border-l-[15px] border-l-accent absolute right-[-15px] top-0 hidden md:block"></div>
+            <div class="w-0 h-0 border-t-[1.25rem] border-t-transparent border-b-[1.25rem] border-b-transparent border-l-[0.9375rem] border-l-accent absolute right-[-0.9375rem] top-0 hidden md:block"></div>
         </div>
         <div class="flex-1 marquee-container ml-6 text-sm font-semibold tracking-wide flex items-center h-full">
             <div class="marquee-content text-gray-200">
