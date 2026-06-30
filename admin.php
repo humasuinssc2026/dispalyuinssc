@@ -264,7 +264,8 @@ if (isset($_POST['add_kegiatan'])) {
         'waktu'         => $_POST['waktu'],
         'nama'          => $_POST['nama'],
         'lokasi'        => $_POST['lokasi'],
-        'tipe'          => $_POST['tipe'] ?? 'hari_ini'
+        'tipe'          => $_POST['tipe'] ?? 'hari_ini',
+        'deskripsi'     => $_POST['deskripsi'] ?? ''
     ];
     $data['kegiatans'][] = $newKegiatan;
     file_put_contents($dataFile, json_encode($data, JSON_PRETTY_PRINT));
@@ -484,6 +485,7 @@ if (isset($_GET['delete_agenda'])) {
                     <input type="text" name="tanggal" required placeholder="Teks Tgl (Tampilan, cth: 10 Ags)" class="p-2 border rounded text-sm">
                     <input type="text" name="waktu" required placeholder="Waktu (cth: 08:00 - Selesai)" class="p-2 border rounded text-sm">
                     <input type="text" name="nama" required placeholder="Nama Kegiatan Utama" class="col-span-2 p-2 border rounded text-sm">
+                    <textarea name="deskripsi" placeholder="Deskripsi Kegiatan" rows="2" class="col-span-2 p-2 border rounded text-sm"></textarea>
                     <input type="text" name="lokasi" required placeholder="Lokasi (cth: Aula Utama)" class="p-2 border rounded text-sm">
                     <select name="tipe" class="p-2 border rounded text-sm bg-white">
                         <option value="hari_ini">Hari Ini</option>

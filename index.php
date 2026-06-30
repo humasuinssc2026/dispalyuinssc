@@ -152,10 +152,15 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
             <div class="flex items-center gap-3">
                 <svg class="w-10 h-10 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.759-2.159 4.5 4.5 0 11-1.385 8.948A.5.5 0 0111 16H5.5z"></path></svg>
-                <div class="text-right">
+                <div class="text-right border-r-2 border-gray-300 pr-4 mr-1">
                     <div class="text-xl font-bold">28°C</div>
                     <div class="text-xs font-semibold">Cirebon</div>
                 </div>
+                <!-- Fullscreen Button -->
+                <button @click="toggleFullscreen()" class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-primary transition shadow-sm" title="Toggle Fullscreen">
+                    <svg x-show="!isFullscreen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                    <svg x-show="isFullscreen" style="display: none;" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h4v4m0-4l-5 5m15-15l-5 5m0 0V4m0 4h4M8 10l-5-5m13 5h4m-4 0v-4"></path></svg>
+                </button>
             </div>
         </div>
     </header>
@@ -222,7 +227,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                     <div class="flex-1 flex gap-4">
                         <div class="flex-1 overflow-hidden" x-show="kegiatans.length > 0">
                             <h3 class="text-xl font-bold text-accent mb-1 line-clamp-1" x-text="kegiatans[0]?.nama">Nama Kegiatan</h3>
-                            <p class="text-sm text-gray-300 mb-2 line-clamp-2">Program peningkatan kapasitas dalam penyusunan proposal tesis dan artikel ilmiah.</p>
+                            <p class="text-sm text-gray-300 mb-2 line-clamp-2" x-text="kegiatans[0]?.deskripsi || 'Tidak ada deskripsi.'"></p>
                             <p class="text-xs text-gray-400">Kegiatan berlangsung pukul <span x-text="kegiatans[0]?.waktu"></span> di <span x-text="kegiatans[0]?.lokasi"></span>.</p>
                         </div>
                         <div class="w-24 shrink-0 flex items-center justify-center" x-show="kegiatans.length > 0">
@@ -469,11 +474,13 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                     <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path></svg>
                     <h2 class="text-sm font-bold tracking-wide uppercase">Link Cepat & Informasi</h2>
                 </div>
-                <div class="flex-1 grid grid-cols-4 gap-2">
+                <div class="flex-1 grid grid-cols-4 gap-2 min-h-0">
                     <template x-for="(link, i) in linkCepat.slice(0, 4)" :key="i">
-                        <a :href="link.url" target="_blank" class="bg-white rounded p-1.5 flex flex-col items-center justify-between text-center border-b-2 border-accent hover:bg-gray-100 transition">
-                            <div class="text-[8px] font-bold text-primary mb-1 line-clamp-1" x-text="link.title"></div>
-                            <img :src="'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' + encodeURIComponent(link.url)" class="w-full aspect-square object-cover">
+                        <a :href="link.url" target="_blank" class="bg-white rounded p-1.5 flex flex-col items-center justify-between text-center border-b-2 border-accent hover:bg-gray-100 transition overflow-hidden h-full">
+                            <div class="text-[8px] font-bold text-primary mb-1 line-clamp-1 shrink-0" x-text="link.title"></div>
+                            <div class="flex-1 min-h-0 flex items-center justify-center w-full">
+                                <img :src="'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' + encodeURIComponent(link.url)" class="h-full w-auto max-w-full object-contain">
+                            </div>
                         </a>
                     </template>
                 </div>
@@ -542,6 +549,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                 newsItems: [],
                 calendarDays: [],
                 calendarMonth: '',
+                isFullscreen: false,
                 
                 init() {
                     this.updateTime();
@@ -561,6 +569,11 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                             this.activePromoIndex = 0;
                         }
                     }, 5000);
+
+                    // Sync fullscreen state
+                    document.addEventListener('fullscreenchange', () => {
+                        this.isFullscreen = !!document.fullscreenElement;
+                    });
                 },
 
                 pollData() {
@@ -686,6 +699,18 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                     } catch (e) {
                         console.error('Error fetching news:', e);
                         this.marqueeHtml = `<span class="mx-4 text-accent">◆</span> Selamat datang di UIN Siber Syekh Nurjati Cirebon ${customRunningText}`;
+                    }
+                },
+
+                toggleFullscreen() {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch((err) => {
+                            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                        });
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        }
                     }
                 },
 
