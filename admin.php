@@ -1,9 +1,9 @@
 <?php
 // admin.php
-@ini_set('upload_max_filesize', '512M');
-@ini_set('post_max_size', '512M');
-@ini_set('memory_limit', '256M');
-@ini_set('max_execution_time', '300');
+@ini_set('upload_max_filesize', '1000');
+@ini_set('post_max_size', '1000');
+@ini_set('memory_limit', '1000');
+@ini_set('max_execution_time', '3000');
 session_start();
 
 $ADMIN_PASSWORD = 'admin@uinssc';
