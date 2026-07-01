@@ -66,18 +66,30 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         html {
-            font-size: 0.833333vw; /* Scales UI proportionally for 1080p and 4K (1rem = 16px at 1920w) */
+            font-size: 16px;
+        }
+        @media (min-width: 1024px) {
+            html {
+                font-size: 0.833333vw; /* Scales UI proportionally for 1080p and 4K (1rem = 16px at 1920w) */
+            }
         }
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             background-color: #052614; /* Very dark green */
             color: white;
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        @media (min-width: 1024px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
         }
 
         .panel {
@@ -134,33 +146,40 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
 </head>
 <body x-data="uinsscDisplay()">
 
-    <header class="h-20 w-full flex items-center justify-between px-6 bg-white border-b-4 border-accent z-10 shrink-0 relative">
-        <div class="flex items-center gap-4 h-full py-2">
-            <img src="<?php echo htmlspecialchars($headerLogo); ?>" alt="Logo UIN SSC" class="h-full object-contain drop-shadow-sm">
-            <div class="border-l-2 border-gray-300 pl-4 h-full flex flex-col justify-center">
-                <h1 class="text-3xl font-extrabold text-[#0a2e1f] tracking-tight leading-none uppercase">PPID</h1>
-                <p class="text-[#dda239] font-bold text-sm tracking-widest uppercase mt-0.5">Pusat Layanan Informasi Publik</p>
+    <header class="h-auto lg:h-20 w-full flex flex-col lg:flex-row items-center justify-between px-4 lg:px-6 py-2 lg:py-0 bg-white border-b-4 border-accent z-10 shrink-0 relative gap-2 lg:gap-0">
+        <div class="flex items-center gap-2 lg:gap-4 h-12 lg:h-full py-1 lg:py-2 w-full lg:w-auto justify-between lg:justify-start">
+            <div class="flex items-center gap-2 lg:gap-4 h-full">
+                <img src="<?php echo htmlspecialchars($headerLogo); ?>" alt="Logo UIN SSC" class="h-full object-contain drop-shadow-sm max-h-12 lg:max-h-full">
+                <div class="border-l-2 border-gray-300 pl-2 lg:pl-4 h-full flex flex-col justify-center">
+                    <h1 class="text-xl lg:text-3xl font-extrabold text-[#0a2e1f] tracking-tight leading-none uppercase">PPID</h1>
+                    <p class="text-[#dda239] font-bold text-[10px] lg:text-sm tracking-widest uppercase mt-0.5">Pusat Layanan Informasi Publik</p>
+                </div>
             </div>
+            <!-- Fullscreen Button for Mobile -->
+            <button @click="toggleFullscreen()" class="lg:hidden p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-primary transition shadow-sm" title="Toggle Fullscreen">
+                <svg x-show="!isFullscreen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                <svg x-show="isFullscreen" style="display: none;" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h4v4m0-4l-5 5m15-15l-5 5m0 0V4m0 4h4M8 10l-5-5m13 5h4m-4 0v-4"></path></svg>
+            </button>
         </div>
         
         <!-- Center Title -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-            <h2 class="text-xl lg:text-2xl font-black text-[#0a2e1f] tracking-wider uppercase text-center opacity-90 drop-shadow-sm">UIN Siber Syekh Nurjati Cirebon</h2>
+        <div class="static lg:absolute left-1/2 top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 flex flex-col items-center my-1 lg:my-0">
+            <h2 class="text-sm md:text-xl lg:text-2xl font-black text-[#0a2e1f] tracking-wider uppercase text-center opacity-90 drop-shadow-sm">UIN Siber Syekh Nurjati Cirebon</h2>
         </div>
         
-        <div class="flex items-center gap-8 h-full py-2 text-primary">
+        <div class="flex items-center gap-4 lg:gap-8 h-full py-1 lg:py-2 text-primary w-full lg:w-auto justify-between lg:justify-end border-t lg:border-t-0 border-gray-200 pt-2 lg:pt-0">
             <div class="text-right">
-                <div class="text-4xl font-extrabold tracking-tight text-accent" x-text="currentTime">00:00:00</div>
-                <div class="text-sm font-bold uppercase tracking-wide text-primary" x-text="currentDate">HARI, DD BULAN YYYY</div>
+                <div class="text-2xl lg:text-4xl font-extrabold tracking-tight text-accent" x-text="currentTime">00:00:00</div>
+                <div class="text-[10px] lg:text-sm font-bold uppercase tracking-wide text-primary" x-text="currentDate">HARI, DD BULAN YYYY</div>
             </div>
-            <div class="flex items-center gap-3">
-                <svg class="w-10 h-10 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.759-2.159 4.5 4.5 0 11-1.385 8.948A.5.5 0 0111 16H5.5z"></path></svg>
-                <div class="text-right border-r-2 border-gray-300 pr-4 mr-1">
-                    <div class="text-xl font-bold">28°C</div>
-                    <div class="text-xs font-semibold">Cirebon</div>
+            <div class="flex items-center gap-2 lg:gap-3">
+                <svg class="w-6 h-6 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.759-2.159 4.5 4.5 0 11-1.385 8.948A.5.5 0 0111 16H5.5z"></path></svg>
+                <div class="text-right border-r-2 border-gray-300 pr-2 lg:pr-4 mr-0 lg:mr-1">
+                    <div class="text-sm lg:text-xl font-bold">28°C</div>
+                    <div class="text-[10px] lg:text-xs font-semibold">Cirebon</div>
                 </div>
-                <!-- Fullscreen Button -->
-                <button @click="toggleFullscreen()" class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-primary transition shadow-sm" title="Toggle Fullscreen">
+                <!-- Fullscreen Button for Desktop -->
+                <button @click="toggleFullscreen()" class="hidden lg:block p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-primary transition shadow-sm" title="Toggle Fullscreen">
                     <svg x-show="!isFullscreen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
                     <svg x-show="isFullscreen" style="display: none;" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h4v4m0-4l-5 5m15-15l-5 5m0 0V4m0 4h4M8 10l-5-5m13 5h4m-4 0v-4"></path></svg>
                 </button>
@@ -169,15 +188,15 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
     </header>
 
     <!-- Main Content Grid -->
-    <main class="flex-1 flex gap-4 p-4 min-h-0 overflow-hidden">
+    <main class="flex-1 flex flex-col lg:flex-row gap-4 p-4 min-h-0 overflow-y-auto lg:overflow-hidden">
         
         <!-- Left Column (Grid spans) -->
-        <div class="w-[65%] grid grid-rows-[55fr_25fr_20fr] gap-4 h-full min-h-0">
+        <div class="w-full lg:w-[65%] flex flex-col lg:grid lg:grid-rows-[55fr_25fr_20fr] gap-4 h-auto lg:h-full min-h-0">
             
             <!-- Top Row: Video & Promosi -->
-            <div class="flex gap-4 min-h-0">
+            <div class="flex flex-col lg:flex-row gap-4 min-h-0">
                 <!-- Video Player / YouTube Live -->
-                <div class="panel flex-1 relative overflow-hidden rounded-xl border border-accent/40 shadow-lg bg-black">
+                <div class="panel flex-1 relative overflow-hidden rounded-xl border border-accent/40 shadow-lg bg-black aspect-video lg:aspect-auto min-h-[250px]">
                     <!-- YouTube Player -->
                     <iframe x-show="youtubeUrl" class="w-full h-full absolute inset-0 z-10" :src="youtubeUrl ? 'https://www.youtube.com/embed/' + youtubeUrl + '?autoplay=1&mute=0&loop=1&playlist=' + youtubeUrl + '&controls=0&showinfo=0&rel=0' : ''" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     
@@ -203,7 +222,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                 </div>
 
                 <!-- Popup Promosi / Flayer -->
-                <div class="w-[17.5rem] aspect-[1080/1350] shrink-0 relative my-auto hover:scale-105 transition-transform duration-500 overflow-hidden rounded-2xl border-4 border-accent shadow-[0_20px_50px_rgba(0,0,0,0.7)] bg-white p-1">
+                <div class="w-3/4 max-w-sm mx-auto lg:w-[17.5rem] lg:mx-0 aspect-[1080/1350] shrink-0 relative my-auto hover:scale-105 transition-transform duration-500 overflow-hidden rounded-2xl border-4 border-accent shadow-[0_20px_50px_rgba(0,0,0,0.7)] bg-white p-1">
                     <template x-for="(promo, index) in promos" :key="index">
                         <img :src="promo" 
                              x-show="activePromoIndex === index"
@@ -220,7 +239,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Middle Row (Deskripsi Kegiatan & Layanan Publik) -->
-            <div class="flex gap-4 min-h-0">
+            <div class="flex flex-col lg:flex-row gap-4 min-h-0">
                 <!-- Deskripsi Kegiatan -->
                 <div class="panel p-4 flex-1 flex flex-col">
                     <div class="panel-header">
@@ -274,7 +293,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Bottom Row (Berita Pimpinan) -->
-            <div class="panel p-4 flex flex-col min-h-0 relative">
+            <div class="panel p-4 flex flex-col min-h-[180px] lg:min-h-0 relative h-auto overflow-hidden">
                 <div class="panel-header justify-between">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path></svg>
@@ -325,14 +344,14 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
         </div>
 
         <!-- Right Column (Grid spans) -->
-        <div class="w-[35%] grid grid-rows-[55fr_25fr_20fr] gap-4 h-full min-h-0">
+        <div class="w-full lg:w-[35%] flex flex-col lg:grid lg:grid-rows-[55fr_25fr_20fr] gap-4 h-auto lg:h-full min-h-0">
             
             <!-- Kalender & Agenda Top Section -->
-            <div class="panel p-4 flex flex-col overflow-hidden min-h-0">
-                <div class="flex gap-4 h-full">
+            <div class="panel p-4 flex flex-col overflow-hidden min-h-[500px] lg:min-h-0">
+                <div class="flex flex-col lg:flex-row gap-4 h-full">
                     
                     <!-- Left: Kalender -->
-                    <div class="w-1/2 flex flex-col border-r border-accent/20 pr-4">
+                    <div class="w-full lg:w-1/2 flex flex-col border-b lg:border-b-0 lg:border-r border-accent/20 pb-4 lg:pb-0 lg:pr-4">
                         <div class="panel-header mb-2">
                             <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                             <h2 class="text-xs font-bold tracking-wide uppercase">Kalender Kegiatan</h2>
@@ -364,7 +383,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
                     </div>
                     
                     <!-- Right: Agenda List -->
-                    <div class="w-1/2 flex flex-col pl-2">
+                    <div class="w-full lg:w-1/2 flex flex-col pt-4 lg:pt-0 lg:pl-2">
                         <div class="panel-header mb-2">
                             <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                             <h2 class="text-xs font-bold tracking-wide uppercase">Agenda Kegiatan</h2>
@@ -425,7 +444,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Agenda Pimpinan -->
-            <div class="panel p-4 flex flex-col min-h-0">
+            <div class="panel p-4 flex flex-col min-h-[250px] lg:min-h-0">
                 <div class="panel-header">
                     <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                     <h2 class="text-sm font-bold tracking-wide uppercase">Agenda Pimpinan</h2>
@@ -472,7 +491,7 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
             </div>
 
             <!-- Link Cepat & QR -->
-            <div class="panel p-4 flex flex-col min-h-0">
+            <div class="panel p-4 flex flex-col min-h-[200px] lg:min-h-0">
                 <div class="panel-header mb-2">
                     <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path></svg>
                     <h2 class="text-sm font-bold tracking-wide uppercase">Link Cepat & Informasi</h2>
@@ -493,18 +512,18 @@ $headerLogo = !empty($settings['logo_url']) ? $settings['logo_url'] : 'https://u
     </main>
 
     <!-- Footer: Info Terkini -->
-    <footer class="h-10 w-full bg-primary border-t border-accent/40 z-10 flex items-center shrink-0">
-        <div class="bg-accent h-full px-6 flex items-center justify-center font-bold text-primary uppercase text-sm whitespace-nowrap z-20 relative">
+    <footer class="h-auto lg:h-10 py-2 lg:py-0 w-full bg-primary border-t border-accent/40 z-10 flex flex-col lg:flex-row items-center shrink-0 gap-2 lg:gap-0">
+        <div class="bg-accent h-8 lg:h-full px-4 lg:px-6 flex items-center justify-center font-bold text-primary uppercase text-[10px] md:text-xs lg:text-sm whitespace-nowrap z-20 relative rounded-full lg:rounded-none w-11/12 lg:w-auto">
             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             INFO TERKINI
-            <div class="w-0 h-0 border-t-[1.25rem] border-t-transparent border-b-[1.25rem] border-b-transparent border-l-[0.9375rem] border-l-accent absolute right-[-0.9375rem] top-0 hidden md:block"></div>
+            <div class="w-0 h-0 border-t-[1.25rem] border-t-transparent border-b-[1.25rem] border-b-transparent border-l-[0.9375rem] border-l-accent absolute right-[-0.9375rem] top-0 hidden lg:block"></div>
         </div>
-        <div class="flex-1 marquee-container ml-6 text-sm font-semibold tracking-wide flex items-center h-full">
+        <div class="flex-1 marquee-container mx-4 lg:ml-6 lg:mr-0 text-sm font-semibold tracking-wide flex items-center h-full w-full lg:w-auto overflow-hidden">
             <div class="marquee-content text-gray-200">
                 <span x-html="marqueeHtml"></span>
             </div>
         </div>
-        <div class="bg-accent h-full px-6 flex items-center justify-center font-bold text-primary text-xs whitespace-nowrap z-20 rounded-tl-xl border-l-2 border-white">
+        <div class="bg-accent h-8 lg:h-full px-4 lg:px-6 flex items-center justify-center font-bold text-primary text-[10px] lg:text-xs whitespace-nowrap z-20 rounded-full lg:rounded-none lg:rounded-tl-xl border-l-0 lg:border-l-2 border-white w-11/12 lg:w-auto">
             Selengkapnya di www.uinssc.ac.id
         </div>
     </footer>
